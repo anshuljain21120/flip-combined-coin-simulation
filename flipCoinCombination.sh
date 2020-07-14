@@ -42,4 +42,6 @@ declare -A singlet_toss_distribution;
 singlet_toss_distribution=(["H"]=0 ["T"]=0 );
 declare -A doublet_toss_distribution;
 doublet_toss_distribution=(["HH"]=0 ["HT"]=0 ["TH"]=0 ["TT"]=0 );
-flip_coin_till doublet_toss_distribution 2;
+declare -A triplet_toss_distribution;
+triplet_toss_distribution=(["HHH"]=0 ["HHT"]=0 ["HTH"]=0 ["HTT"]=0 ["THH"]=0 ["THT"]=0 ["TTH"]=0 ["TTT"]=0 );
+flip_coin_till triplet_toss_distribution 3;
