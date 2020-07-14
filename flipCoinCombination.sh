@@ -12,13 +12,25 @@ function flip_a_coin()
 		echo "T";
 	fi
 }
+function flip_combined_coin()
+{
+	local limit=$1;
+	local result="";
+	while [ $limit -gt 0 ]
+	do
+		result="$result$( flip_a_coin )";
+		((limit--));
+	done
+	echo "$result";
+}
 function flip_coin_till()
 {
 	local -n _dict=$1;
-	local limit=${2:-10};
+	local combination=$2;
+	local limit=${3:-10};
 	for (( counter=1; counter<=limit; counter++ ))
 	do
-		toss_result="$( flip_a_coin )";
+		toss_result="$( flip_combined_coin $2 )";
 		_dict["$toss_result"]=$(( ${_dict["$toss_result"]} + 1 ));
 	done
 	for key in ${!_dict[@]};
@@ -28,5 +40,6 @@ function flip_coin_till()
 }
 declare -A singlet_toss_distribution;
 singlet_toss_distribution=(["H"]=0 ["T"]=0 );
-flip_coin_till singlet_toss_distribution;
-echo "${singlet_toss_distribution[@]}";
+declare -A doublet_toss_distribution;
+doublet_toss_distribution=(["HH"]=0 ["HT"]=0 ["TH"]=0 ["TT"]=0 );
+flip_coin_till doublet_toss_distribution 2;
